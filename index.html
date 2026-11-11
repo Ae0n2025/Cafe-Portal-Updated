@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b3b2c">
+    <title>Café Portal - STI College Global City</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <section id="loginView" class="app-view">
+
+
+    <!-- Student Comment: Main split layout shell -->
+    <div class="portal-wrapper">
+        
+        <!-- LEFT PANEL: Dark green background with text overlays and background image -->
+        <aside class="left-panel">
+            <div class="panel-overlay"></div>
+            
+            <div class="left-content">
+                <!-- Top Brand Header -->
+                <header class="brand-header">
+                    <div class="logo-box">
+                        <i data-lucide="coffee"></i>
+                    </div>
+                    <div class="brand-text">
+                        <span class="brand-title">Café Portal</span>
+                        <span class="brand-subtitle">STI GLOBAL CITY</span>
+                    </div>
+                </header>
+
+                <!-- Middle Hero Text Section -->
+                <div class="hero-section">
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        CAMPUS DINING, MADE SIMPLE
+                    </div>
+                    <h1 class="hero-title">Good food,<br>less waiting.</h1>
+                    <p class="hero-description">
+                        Order ahead, pay securely, and pick up when it is ready—your campus break, back in your hands.
+                    </p>
+                </div>
+
+                <!-- Left Panel Footer Text -->
+                <footer class="left-footer">
+                    Secure access for students, faculty, and cafe staff.
+                </footer>
+            </div>
+        </aside>
+
+        <!-- RIGHT PANEL: Light background container holding the dynamic login card -->
+        <main class="right-panel">
+            <div class="login-container">
+                
+                <!-- Main Form Header -->
+                <div class="login-header">
+                    <span class="welcome-label">WELCOME BACK</span>
+                    <h2 class="main-heading">Sign in to your portal</h2>
+                    <p class="sub-heading">Sign in with your Supabase account to continue.</p>
+                </div>
+
+                <!-- Primary Switcher (Customer vs Staff) -->
+                <div class="segmented-control main-switch">
+                    <button id="btnCustomerRole" class="tab-btn active" type="button">Customer</button>
+                    <button id="btnStaffRole" class="tab-btn" type="button">Staff</button>
+                </div>
+
+                <!-- CARD 1: CUSTOMER PORTAL -->
+                <div id="customerCard" class="portal-card">
+    <div class="card-header-row">
+        <div class="icon-avatar"><i data-lucide="user-cog"></i></div>
+        <div class="card-header-text">
+            <h3>Students &amp; faculty</h3>
+            <p>Sign in or create a customer account.</p>
+        </div>
+    </div>
+    <div class="segmented-control sub-switch">
+        <button id="customerSignInMode" class="sub-tab-btn active" type="button">Sign in</button>
+        <button id="customerSignUpMode" class="sub-tab-btn" type="button">Create account</button>
+    </div>
+    <div id="customerSignInView" class="auth-view active">
+        <form id="customerSignInForm">
+            <div class="form-group">
+                <label for="customerEmail">Email</label>
+                <div class="input-wrapper"><i data-lucide="mail" class="input-icon"></i><input id="customerEmail" name="email" type="email" autocomplete="username" required placeholder="you@example.com"></div>
+            </div>
+            <div class="form-group">
+                <div class="label-row"><label for="customerPassword">Password</label><a href="#" id="customerForgotPassword" class="link-forgot">Forgot password?</a></div>
+                <div class="input-wrapper"><i data-lucide="lock" class="input-icon"></i><input id="customerPassword" name="password" type="password" autocomplete="current-password" required><i data-lucide="eye" class="eye-icon toggle-password"></i></div>
+            </div>
+            <button type="submit" class="btn-primary">Sign in to customer portal</button>
+            <p id="customerAuthMessage" class="auth-message" role="status" aria-live="polite"></p>
+        </form>
+    </div>
+    <div id="customerSignUpView" class="auth-view">
+        <form id="customerSignUpForm">
+            <div class="form-group"><label for="customerFullName">Full name</label><div class="input-wrapper"><i data-lucide="user" class="input-icon"></i><input id="customerFullName" name="fullName" autocomplete="name" required></div></div>
+            <div class="form-group"><label for="customerSignUpEmail">Email</label><div class="input-wrapper"><i data-lucide="mail" class="input-icon"></i><input id="customerSignUpEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div></div>
+            <div class="form-group"><label for="customerSignUpPassword">Password</label><div class="input-wrapper"><i data-lucide="lock" class="input-icon"></i><input id="customerSignUpPassword" name="password" type="password" autocomplete="new-password" minlength="8" required><i data-lucide="eye" class="eye-icon toggle-password"></i></div></div>
+            <div class="form-group"><label for="customerConfirmPassword">Confirm password</label><div class="input-wrapper"><i data-lucide="lock" class="input-icon"></i><input id="customerConfirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" required></div></div>
+            <button type="submit" class="btn-primary">Create customer account</button>
+            <p id="customerSignUpMessage" class="auth-message" role="status" aria-live="polite"></p>
+        </form>
+    </div>
+</div>
+
+                <!-- CARD 2: STAFF PORTAL -->
+                <div id="staffCard" class="portal-card" style="display: none;">
+    <div class="card-header-row"><div class="icon-avatar"><i data-lucide="coffee"></i></div><div class="card-header-text"><h3>Café staff</h3><p>Sign in with an approved staff account.</p></div></div>
+    <form id="staffSignInForm">
+        <div class="form-group"><label for="staffEmail">Email</label><div class="input-wrapper"><i data-lucide="mail" class="input-icon"></i><input id="staffEmail" name="email" type="email" autocomplete="username" required placeholder="staff@example.com"></div></div>
+        <div class="form-group"><div class="label-row"><label for="staffPassword">Password</label><a href="#" id="staffForgotPassword" class="link-forgot">Forgot password?</a></div><div class="input-wrapper"><i data-lucide="lock" class="input-icon"></i><input id="staffPassword" name="password" type="password" autocomplete="current-password" required><i data-lucide="eye" class="eye-icon toggle-password"></i></div></div>
+        <button type="submit" class="btn-primary">Sign in to staff portal</button>
+        <p id="staffAuthMessage" class="auth-message" role="status" aria-live="polite"></p>
+    </form>
+</div>
+
+                <!-- Footer Disclaimers -->
+                <footer class="right-footer">
+                    <p id="footerDynamicNote" class="redirect-info">
+                        Customers can create an account. Staff access is limited to approved staff members.
+                    </p>
+                    <p class="copyright-info">© 2027 Café Portal • STI College Global City</p>
+                </footer>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Note: Initialize Lucide icons and handle interface script -->
+    
+    
+
+</section>
+        <section id="customerView" class="app-view" hidden>
+
+
+    <!-- Student Comment: Top persistent Header Navigation Bar -->
+    <header class="top-nav">
+        <div class="nav-brand">
+            <div class="logo-box">
+                <i data-lucide="coffee"></i>
+            </div>
+            <div class="brand-text">
+                <span class="brand-title">Café Portal</span>
+                <span class="brand-subtitle">STI GLOBAL CITY</span>
+            </div>
+        </div>
+
+        <div class="nav-user-actions">
+            <!-- Shopping Cart Quick Access Button -->
+            <button class="btn-cart-nav" id="openCartBtn">
+                <i data-lucide="shopping-cart"></i>
+                <span class="cart-count-badge" id="navCartCount">0</span>
+            </button>
+
+            <!-- Student Profile Badge -->
+            <div class="user-profile-badge">
+                <span class="user-name js-user-name">Alex Rivera</span>
+                <span class="user-role">Student • 2027</span>
+            </div>
+
+            <!-- Logout action button -->
+            <button class="btn-logout" id="headerLogoutBtn" title="Sign out" type="button">
+                <i data-lucide="log-out"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Student Comment: Main Layout splitting Sidebar and Main Dynamic View Area -->
+    <div class="app-container">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar">
+            <!-- Active User Card Avatar -->
+            <div class="user-card">
+                <div class="avatar-circle">AR</div>
+                <div class="user-info">
+                    <h4 class="js-user-name">Alex Rivera</h4>
+                    <p>Student • 2027</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="sidebar-nav">
+                <button class="nav-link active" data-view="viewHome">
+                    <i data-lucide="home"></i> Home
+                </button>
+                <button class="nav-link" data-view="viewOrderHistory">
+                    <i data-lucide="history"></i> Order History
+                </button>
+                <button class="nav-link" data-view="viewOrderTracking">
+                    <i data-lucide="receipt"></i> Order Tracking
+                </button>
+                <button class="nav-link" data-view="viewSettings">
+                    <i data-lucide="settings"></i> Settings
+                </button>
+            </nav>
+        </aside>
+
+        <!-- DYNAMIC MAIN CONTENT PANEL -->
+        <main class="main-content">
+
+            <!-- ================= VIEW 1: HOME MENU ================= -->
+            <section id="viewHome" class="content-view active">
+                <!-- Banner Box -->
+                <div class="hero-banner">
+                    <span class="greeting-tag" id="greetingTag">GOOD MORNING, ALEX</span>
+                    <h1 class="hero-heading">What are you craving today?</h1>
+                    <p class="hero-subtext">Freshly prepared on campus. Order now and skip the line.</p>
+                    
+                    <div class="search-bar">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="menuSearchInput" placeholder="Search meals, drinks, and snacks">
+                    </div>
+                </div>
+
+                <!-- Today's Menu Section -->
+                <div class="menu-section">
+                    <div class="section-header">
+                        <div>
+                            <span class="section-tag">TODAY'S MENU</span>
+                            <h2 class="section-title">Popular on campus</h2>
+                        </div>
+
+                        <!-- Menu Category Filter Pills -->
+                        <div class="category-filters">
+                            <button class="filter-pill active" data-category="all">All items</button>
+                            <button class="filter-pill" data-category="meals">Meals</button>
+                            <button class="filter-pill" data-category="drinks">Drinks</button>
+                            <button class="filter-pill" data-category="snacks">Snacks</button>
+                        </div>
+                    </div>
+
+                    <!-- Items Grid -->
+                    <div class="products-grid" id="productsGrid">
+                        <!-- Item 1: Chicken Teriyaki Bowl -->
+                        <div class="product-card" data-category="meals" data-product-id="chicken-teriyaki-bowl">
+                            <div class="card-image-wrap">
+                                <span class="most-ordered-badge"><i data-lucide="star"></i> MOST ORDERED</span>
+                                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600" alt="Chicken Teriyaki Bowl">
+                                <span class="price-tag">₱145</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>Chicken Teriyaki Bowl</h3>
+                                    <button class="btn-add-item" data-product-id="chicken-teriyaki-bowl" data-name="Chicken Teriyaki Bowl" data-price="145" aria-label="Add Chicken Teriyaki Bowl to cart">+</button>
+                                </div>
+                                <p class="card-desc">Glazed chicken, steamed rice, egg, and fresh vegetables.</p>
+                                <a href="#" class="view-details-link">View item details</a>
+                            </div>
+                        </div>
+
+                        <!-- Item 2: Caramel Iced Latte -->
+                        <div class="product-card" data-category="drinks" data-product-id="caramel-iced-latte">
+                            <div class="card-image-wrap">
+                                <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=600" alt="Caramel Iced Latte">
+                                <span class="price-tag">₱95</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>Caramel Iced Latte</h3>
+                                    <button class="btn-add-item" data-product-id="caramel-iced-latte" data-name="Caramel Iced Latte" data-price="95" aria-label="Add Caramel Iced Latte to cart">+</button>
+                                </div>
+                                <p class="card-desc">Espresso, creamy milk, caramel, and ice.</p>
+                                <a href="#" class="view-details-link">View item details</a>
+                            </div>
+                        </div>
+
+                        <!-- Item 3: Chocolate Croissant -->
+                        <div class="product-card" data-category="snacks" data-product-id="chocolate-croissant">
+                            <div class="card-image-wrap">
+                                <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&q=80&w=600" alt="Chocolate Croissant">
+                                <span class="price-tag">₱75</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>Chocolate Croissant</h3>
+                                    <button class="btn-add-item" data-product-id="chocolate-croissant" data-name="Chocolate Croissant" data-price="75" aria-label="Add Chocolate Croissant to cart">+</button>
+                                </div>
+                                <p class="card-desc">Buttery pastry with a rich chocolate center.</p>
+                                <a href="#" class="view-details-link">View item details</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="empty-menu-message" id="emptyMenuMessage" hidden>No menu items match your search.</p>
+                    <p class="footnote"><i data-lucide="star"></i> The Most Ordered badge updates automatically from live sales data.</p>
+                </div>
+            </section>
+
+            <!-- ================= VIEW 2: ORDER HISTORY ================= -->
+            <section id="viewOrderHistory" class="content-view">
+                <div class="view-header">
+                    <span class="section-tag">ORDER HISTORY</span>
+                    <div class="title-with-badge">
+                        <h2 class="view-title">Your order history</h2>
+                        <span class="count-pill" id="orderCount">0 ORDERS</span>
+                    </div>
+                    <p class="view-subtext">Select an order to view its complete information.</p>
+                </div>
+
+                <div class="data-table-card">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>ORDER NUMBER</th>
+                                <th>ITEMS</th>
+                                <th>TIME</th>
+                                <th>STATUS</th>
+                                <th>INFORMATION</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderHistoryBody"></tbody>
+                    </table>
+                    <p class="empty-orders-message" id="emptyHistoryMessage">No orders yet. Place an order from today's menu to see it here.</p>
+                </div>
+            </section>
+
+            <!-- ================= VIEW 3: ORDER TRACKING ================= -->
+            <section id="viewOrderTracking" class="content-view">
+                <div class="view-header">
+                    <span class="section-tag">ORDER TRACKING</span>
+                    <h2 class="view-title">Your orders</h2>
+                    <p class="alert-warning-text"><i data-lucide="alert-triangle"></i> Orders cannot be cancelled once the café starts preparing the food.</p>
+                </div>
+
+                <div class="tracking-orders" id="trackingOrders"></div>
+                <div class="empty-state-box" id="emptyTrackingMessage">
+                    <p>You have no active orders right now.</p>
+                </div>
+            </section>
+
+            <!-- ================= VIEW 4: SETTINGS & PROFILE ================= -->
+            <section id="viewSettings" class="content-view">
+                <div class="view-header">
+                    <span class="section-tag">YOUR ACCOUNT</span>
+                    <h2 class="view-title">Profile & settings</h2>
+                    <p class="view-subtext">Manage your personal details, preferences, and account session.</p>
+                </div>
+
+                <!-- Settings Tabs Navigation Bar -->
+                <div class="settings-tab-bar">
+                    <button class="settings-tab-btn active" data-settings-tab="tabProfile">
+                        <i data-lucide="user"></i> Profile
+                    </button>
+                    <button class="settings-tab-btn" data-settings-tab="tabPreferences">
+                        <i data-lucide="sliders"></i> Preferences
+                    </button>
+                    <button class="settings-tab-btn" data-settings-tab="tabSecurity">
+                        <i data-lucide="lock"></i> Security
+                    </button>
+                </div>
+
+                <!-- Settings Tab 1: Profile View -->
+                <div id="tabProfile" class="settings-pane active">
+                    <div class="settings-card">
+                        <div class="profile-header-group">
+                            <div class="avatar-large-container">
+                                <div class="avatar-large" id="profileAvatar">AR</div>
+                                <button class="btn-change-photo" id="changePhotoBtn" type="button">Change photo</button>
+                                <input id="profilePhotoInput" type="file" accept="image/*" hidden>
+                            </div>
+                            <div class="profile-text-meta">
+                                <span class="section-tag">PROFILE</span>
+                                <h3>Personal information</h3>
+                                <p>Update the name and photo shown across your account.</p>
+                            </div>
+                        </div>
+
+                        <form class="settings-form" id="profileForm">
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label for="profileName">Full name</label>
+                                    <input id="profileName" name="fullName" type="text" value="Alex Rivera" required maxlength="100">
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label for="profileEmail">Email address</label>
+                                    <input id="profileEmail" name="email" type="email" value="alex.rivera@sti.edu.ph">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary-dark">Save profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Settings Tab 2: Preferences View -->
+                <div id="tabPreferences" class="settings-pane">
+                    <div class="settings-grid-two">
+                        <!-- Language Card -->
+                        <div class="settings-card">
+                            <span class="section-tag">LANGUAGE</span>
+                            <h3>Portal language</h3>
+                            <p class="card-sub-desc">Choose the language you prefer for the portal interface.</p>
+                            
+                            <select class="custom-select" id="languageSelect">
+                                <option value="en">English</option>
+                                <option value="fil">Filipino</option>
+                            </select>
+                        </div>
+
+                        <!-- Dark Mode Card -->
+                        <div class="settings-card">
+                            <span class="section-tag">APPEARANCE</span>
+                            <h3>Dark mode</h3>
+                            <p class="card-sub-desc">Switch between light and dark appearances.</p>
+                            
+                            <div class="toggle-mode-group">
+                                <button class="mode-btn active" id="btnLightMode">Light mode</button>
+                                <button class="mode-btn" id="btnDarkMode">Dark mode</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab 3: Security View -->
+                <div id="tabSecurity" class="settings-pane">
+                    <div class="settings-card mb-20">
+                        <div class="security-row">
+                            <div class="security-info">
+                                <div class="icon-sq-avatar"><i data-lucide="lock"></i></div>
+                                <div>
+                                    <h4>Sign-in method</h4>
+                                    <p>Student ID and password • STI-2027-001</p>
+                                </div>
+                            </div>
+                            <span class="badge-protected">Protected</span>
+                        </div>
+
+                        <hr class="divider">
+
+                        <div class="security-row">
+                            <div>
+                                <h4>Current session</h4>
+                                <p class="text-sm-muted">This device • Active now</p>
+                            </div>
+                            <span class="status-dot-active">• Active</span>
+                        </div>
+                    </div>
+
+                    <!-- Logout Warning Card -->
+                    <div class="logout-card">
+                        <div>
+                            <h4>Log out of your account</h4>
+                            <p>You will return to the Café Portal sign-in screen.</p>
+                        </div>
+                        <button class="btn-danger" id="settingsLogoutBtn" type="button">Log out</button>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ================= VIEW 5: CHECKOUT / CART ================= -->
+            <section id="viewCheckout" class="content-view">
+                <div class="checkout-header">
+                    <button class="btn-back" id="backToMenuBtn"><i data-lucide="chevron-left"></i></button>
+                    <div>
+                        <span class="section-tag">CHECKOUT</span>
+                        <h2 class="view-title">Review your order</h2>
+                    </div>
+                </div>
+
+                <div class="checkout-layout">
+                    <!-- Left: Cart Items -->
+                    <div class="cart-items-column">
+                        <span class="section-tag">YOUR CART</span>
+                        <h3 class="subsection-title">Item details</h3>
+
+                        <div id="emptyCartBox" class="empty-cart-container">
+                            <div class="cart-icon-circle"><i data-lucide="shopping-cart"></i></div>
+                            <h3>Your cart is empty</h3>
+                            <button class="btn-text-link" id="btnReturnMenu">Return to the menu</button>
+                        </div>
+
+                        <div id="filledCartItems" class="cart-items-list" hidden>
+                            <!-- Dynamically injected items will appear here -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Payment Methods Selection -->
+                    <div class="payment-column">
+                        <div class="payment-card">
+                            <span class="section-tag">PAYMENT</span>
+                            <h3 class="subsection-title">Choose how to pay</h3>
+                            <p class="payment-sub">Select one payment method for this order.</p>
+
+                            <div class="payment-methods-grid">
+                                <label class="payment-option active">
+                                    <input type="radio" name="payment" value="cash" checked>
+                                    <div class="option-content">
+                                        <div class="option-title">
+                                            <strong>Cash</strong>
+                                            <i data-lucide="check-circle-2" class="check-icon"></i>
+                                        </div>
+                                        <p>Pay at the café cashier</p>
+                                    </div>
+                                </label>
+
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="gcash">
+                                    <div class="option-content">
+                                        <div class="option-title">
+                                            <strong>GCash</strong>
+                                            <span class="radio-circle"></span>
+                                        </div>
+                                        <p>Pay using your GCash wallet</p>
+                                    </div>
+                                </label>
+
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="maya">
+                                    <div class="option-content">
+                                        <div class="option-title">
+                                            <strong>Maya</strong>
+                                            <span class="radio-circle"></span>
+                                        </div>
+                                        <p>Pay using your Maya wallet</p>
+                                    </div>
+                                </label>
+
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="bank">
+                                    <div class="option-content">
+                                        <div class="option-title">
+                                            <strong>Bank transfer</strong>
+                                            <span class="radio-circle"></span>
+                                        </div>
+                                        <p>Send payment from your bank</p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Cost Breakdown -->
+                            <div class="price-breakdown">
+                                <div class="price-row">
+                                    <span>Items (<span id="checkoutItemCount">0</span>)</span>
+                                    <span id="checkoutSubtotal">₱0</span>
+                                </div>
+                                <div class="price-row">
+                                    <span>Service fee</span>
+                                    <span class="text-green-bold">Free</span>
+                                </div>
+                                <div class="price-row total-row">
+                                    <strong>Order total</strong>
+                                    <strong class="total-price" id="checkoutTotal">₱0</strong>
+                                </div>
+                            </div>
+
+                            <button class="btn-place-order" id="placeOrderBtn" disabled>Place order <i data-lucide="chevron-right"></i></button>
+
+                            <p class="secure-note"><i data-lucide="lock"></i> Payment details are used only to review this checkout.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <dialog id="productDetailsDialog" class="product-details-dialog">
+        <form method="dialog" class="dialog-close-form">
+            <button class="dialog-close" aria-label="Close item details">×</button>
+        </form>
+        <img id="detailsImage" alt="">
+        <span class="section-tag" id="detailsCategory"></span>
+        <h2 id="detailsName"></h2>
+        <p id="detailsDescription"></p>
+        <div class="dialog-footer">
+            <strong id="detailsPrice"></strong>
+            <button class="btn-primary-dark" id="detailsAddButton" type="button">Add to cart</button>
+        </div>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    
+    
+    
+    
+
+</section>
+        <section id="staffView" class="app-view" hidden>
+
+
+    <!-- Student Comment: Persistent Staff Top Navigation Bar -->
+    <header class="top-nav">
+        <div class="nav-brand">
+            <div class="logo-box">
+                <i data-lucide="coffee"></i>
+            </div>
+            <div class="brand-text">
+                <span class="brand-title">Café Portal</span>
+                <span class="brand-subtitle">STI GLOBAL CITY</span>
+            </div>
+        </div>
+
+        <div class="nav-user-actions">
+            <div class="user-profile-badge">
+                <span class="user-name">Staff</span>
+                <span class="user-role">Café staff</span>
+            </div>
+            <button id="staffLogoutBtn" class="btn-logout" title="Sign out" type="button">
+                <i data-lucide="log-out"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Student Comment: Main Staff Workspace Layout -->
+    <div class="app-container">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar">
+            <!-- Active Staff Profile Badge -->
+            <div class="staff-card">
+                <div class="staff-card-top">
+                    <div class="avatar-circle">MS</div>
+                    <div class="staff-info">
+                        <h4>Maria Santos</h4>
+                        <p>Canteen Staff • STF-2048</p>
+                    </div>
+                </div>
+                <div class="shift-status">
+                    <span class="status-dot"></span> Currently on shift
+                </div>
+            </div>
+
+            <!-- Sidebar Navigation Links with Counters -->
+            <nav class="sidebar-nav">
+                <button class="nav-link active" data-view="viewOverview">
+                    <i data-lucide="layout-grid"></i> Overview
+                </button>
+                <button class="nav-link" data-view="viewOrders">
+                    <i data-lucide="file-text"></i> Orders
+                    <span class="badge-count yellow">2</span>
+                </button>
+                <button class="nav-link" data-view="viewMenu">
+                    <i data-lucide="utensils"></i> Menu
+                    <span class="badge-count yellow">3</span>
+                </button>
+                <button class="nav-link" data-view="viewProfileSettings">
+                    <i data-lucide="user"></i> Profile Settings
+                </button>
+            </nav>
+
+            <button class="sidebar-logout">
+                <i data-lucide="log-out"></i> Log out
+            </button>
+        </aside>
+
+        <!-- DYNAMIC WORKSPACE MAIN CONTAINER -->
+        <main class="main-content">
+
+            <!-- ================= VIEW 1: SALES DASHBOARD (OVERVIEW) ================= -->
+            <section id="viewOverview" class="content-view active">
+                <div class="view-header-row">
+                    <div>
+                        <span class="section-tag">STAFF OVERVIEW</span>
+                        <h1 class="view-title">Sales dashboard</h1>
+                        <p class="view-subtext">Wednesday, September 15 • Live data</p>
+                    </div>
+                    <div class="segmented-control">
+                        <button class="tab-btn active">This week</button>
+                        <button class="tab-btn">This month</button>
+                    </div>
+                </div>
+
+                <!-- Metric Summary Cards -->
+                <div class="metrics-grid">
+                    <!-- Metric 1 -->
+                    <div class="metric-card">
+                        <div class="metric-content">
+                            <span class="metric-label">Items sold today</span>
+                            <h2 class="metric-value">84</h2>
+                            <span class="metric-trend"><i data-lucide="arrow-up-right"></i> 12.5% from yesterday</span>
+                        </div>
+                        <div class="metric-icon"><i data-lucide="file-text"></i></div>
+                    </div>
+
+                    <!-- Metric 2 -->
+                    <div class="metric-card">
+                        <div class="metric-content">
+                            <span class="metric-label">Monthly items sold</span>
+                            <h2 class="metric-value">2,184</h2>
+                            <span class="metric-trend"><i data-lucide="arrow-up-right"></i> 8.2% from last month</span>
+                        </div>
+                        <div class="metric-icon"><i data-lucide="calendar"></i></div>
+                    </div>
+
+                    <!-- Metric 3 (Dark Featured Card) -->
+                    <div class="metric-card dark-card">
+                        <div class="metric-content">
+                            <span class="metric-label">Revenue this month</span>
+                            <h2 class="metric-value">₱286,420</h2>
+                            <span class="metric-trend"><i data-lucide="arrow-up-right"></i> 10.4% from last month</span>
+                        </div>
+                        <div class="metric-icon"><i data-lucide="banknote">₱</i></div>
+                    </div>
+
+                    <!-- Metric 4 -->
+                    <div class="metric-card">
+                        <div class="metric-content">
+                            <span class="metric-label">Average order value</span>
+                            <h2 class="metric-value">₱131.15</h2>
+                            <span class="metric-trend"><i data-lucide="arrow-up-right"></i> ₱4.20 this month</span>
+                        </div>
+                        <div class="metric-icon"><i data-lucide="trending-up"></i></div>
+                    </div>
+                </div>
+
+                <!-- Analytics Charts Row -->
+                <div class="charts-row">
+                    <!-- Daily items sold Line Chart Card -->
+                    <div class="chart-card flex-2">
+                        <div class="chart-header">
+                            <div>
+                                <h3>Daily items sold</h3>
+                                <p>Orders completed over the last 7 days</p>
+                            </div>
+                            <span class="pill-green">+16.7%</span>
+                        </div>
+
+                        <!-- SVG Line Chart Mock -->
+                        <div class="svg-chart-container">
+                            <svg viewBox="0 0 500 150" class="line-chart-svg">
+                                <defs>
+                                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#0b3b2c" stop-opacity="0.2"/>
+                                        <stop offset="100%" stop-color="#0b3b2c" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M 40,110 L 110,95 L 180,105 L 250,80 L 320,90 L 390,60 L 460,70 L 460,140 L 40,140 Z" fill="url(#chartGrad)" />
+                                <path d="M 40,110 L 110,95 L 180,105 L 250,80 L 320,90 L 390,60 L 460,70" fill="none" stroke="#0b3b2c" stroke-width="3" />
+                                <circle cx="40" cy="110" r="5" fill="#ffffff" stroke="#0b3b2c" stroke-width="3"/>
+                                <circle cx="110" cy="95" r="5" fill="#ffffff" stroke="#0b3b2c" stroke-width="3"/>
+                                <circle cx="180" cy="105" r="5" fill="#ffffff" stroke="#0b3b2c" stroke-width="3"/>
+                                <circle cx="250" cy="80" r="5" fill="#ffffff" stroke="#0b3b2c" stroke-width="3"/>
+                                <circle cx="320" cy="90" r="5" fill="#ffffff" stroke="#0b3b2c" stroke-width="3"/>
+                                <circle cx="390" cy="60" r="5" fill="#ffffff" stroke="#0b3b2c" stroke-width="3"/>
+                                <circle cx="460" cy="70" r="5" fill="#ffffff" stroke="#0b3b2c" stroke-width="3"/>
+                            </svg>
+                            <div class="chart-x-axis">
+                                <span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Revenue Bar Chart Card -->
+                    <div class="chart-card flex-1">
+                        <div class="chart-header">
+                            <div>
+                                <h3>Daily revenue</h3>
+                                <p>Revenue earned over the last 7 days</p>
+                            </div>
+                            <span class="pill-gold">₱54,600</span>
+                        </div>
+
+                        <!-- Bar Chart Mock -->
+                        <div class="bar-chart-container">
+                            <div class="bar-group"><div class="bar" style="height: 45%;"></div><span>Thu</span></div>
+                            <div class="bar-group"><div class="bar" style="height: 55%;"></div><span>Fri</span></div>
+                            <div class="bar-group"><div class="bar" style="height: 40%;"></div><span>Sat</span></div>
+                            <div class="bar-group"><div class="bar" style="height: 70%;"></div><span>Sun</span></div>
+                            <div class="bar-group"><div class="bar" style="height: 60%;"></div><span>Mon</span></div>
+                            <div class="bar-group"><div class="bar" style="height: 85%;"></div><span>Tue</span></div>
+                            <div class="bar-group"><div class="bar gold-bar" style="height: 80%;"></div><span>Wed</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Most Ordered Product Banner -->
+                <div class="top-product-card">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=300" alt="Chicken Teriyaki Bowl">
+                    <div class="top-product-info">
+                        <span class="section-tag">MOST ORDERED THIS MONTH</span>
+                        <h3>Chicken Teriyaki Bowl</h3>
+                        <p>128 accepted items • Updates when staff accepts an order</p>
+                    </div>
+                    <span class="rank-badge"><i data-lucide="star"></i> #1</span>
+                </div>
+            </section>
+
+            <!-- ================= VIEW 2: ORDERS WORKSPACE ================= -->
+            <section id="viewOrders" class="content-view">
+                <div class="view-header-row">
+                    <div>
+                        <span class="section-tag">ORDER WORKSPACE</span>
+                        <h1 class="view-title">Orders</h1>
+                        <p class="view-subtext">Manage the live queue or verify today's previous orders.</p>
+                    </div>
+                    <div class="segmented-control">
+                        <button class="tab-btn active">Manage Orders <span class="badge-count-sm">2</span></button>
+                        <button class="tab-btn">Today's History <span class="badge-count-sm gray">4</span></button>
+                    </div>
+                </div>
+
+                <div class="sub-header-row">
+                    <div>
+                        <span class="section-tag">LIVE QUEUE</span>
+                        <h2 class="sub-title">Manage orders</h2>
+                    </div>
+                    <span class="active-count-pill">2 active</span>
+                </div>
+
+                <!-- Orders Queue Grid -->
+                <div class="orders-queue-grid">
+                    <!-- Order Card 1: Pending -->
+                    <div class="queue-card">
+                        <div class="queue-card-header">
+                            <div>
+                                <span class="order-meta">CP-1048 • 10:42 AM</span>
+                                <h3>Jamie Cruz</h3>
+                                <p class="payment-method">Payment: GCash</p>
+                            </div>
+                            <span class="status-pill status-pending">PENDING</span>
+                        </div>
+                        <div class="queue-items-list">
+                            <div class="item-line"><span>2× Chicken Teriyaki Bowl</span><strong>₱290</strong></div>
+                            <div class="item-line"><span>1× Caramel Iced Latte</span><strong>₱95</strong></div>
+                        </div>
+                        <div class="queue-card-footer">
+                            <h3 class="total-price">₱385</h3>
+                            <div class="btn-action-group">
+                                <button class="btn-outline-danger">Cancel</button>
+                                <button class="btn-solid-dark">Accept order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Card 2: Preparing -->
+                    <div class="queue-card">
+                        <div class="queue-card-header">
+                            <div>
+                                <span class="order-meta">CP-1047 • 10:36 AM</span>
+                                <h3>Sam Reyes</h3>
+                                <p class="payment-method">Payment: Cash</p>
+                            </div>
+                            <span class="status-pill status-preparing">PREPARING</span>
+                        </div>
+                        <div class="queue-items-list">
+                            <div class="item-line"><span>2× Chocolate Croissant</span><strong>₱150</strong></div>
+                        </div>
+                        <div class="queue-card-footer">
+                            <h3 class="total-price">₱150</h3>
+                            <div class="btn-action-group">
+                                <button class="btn-outline-danger">Cancel</button>
+                                <button class="btn-solid-dark">Ready for pickup</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= VIEW 3: MENU MANAGEMENT ================= -->
+            <section id="viewMenu" class="content-view">
+                <div class="view-header-row">
+                    <div>
+                        <span class="section-tag">CATALOG</span>
+                        <h1 class="view-title">Menu management</h1>
+                        <p class="view-subtext">Changes appear in the customer menu immediately.</p>
+                    </div>
+                    <button class="btn-solid-dark" id="btnOpenAddModal"><i data-lucide="plus"></i> Add new item</button>
+                </div>
+
+                <!-- Food Categories Header Bar -->
+                <div class="categories-bar-card">
+                    <div>
+                        <span class="category-label">Food categories</span>
+                        <div class="category-pills-row">
+                            <span class="cat-pill">Meals</span>
+                            <span class="cat-pill">Drinks</span>
+                            <span class="cat-pill">Snacks</span>
+                        </div>
+                    </div>
+                    <div class="add-cat-inline">
+                        <input type="text" placeholder="New category">
+                        <button class="btn-outline">Add category</button>
+                    </div>
+                </div>
+
+                <!-- Menu Catalog Grid -->
+                <div class="catalog-grid">
+                    <!-- Catalog Item 1 -->
+                    <div class="catalog-card">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=300" alt="Chicken Teriyaki Bowl">
+                        <div class="catalog-info">
+                            <span class="section-tag">MEALS</span>
+                            <h4>Chicken Teriyaki Bowl</h4>
+                            <p class="price">₱145</p>
+                            <div class="card-btn-row">
+                                <button class="btn-sm-edit" data-item="Chicken Teriyaki Bowl">Edit</button>
+                                <button class="btn-sm-delete">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Catalog Item 2 -->
+                    <div class="catalog-card">
+                        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=300" alt="Caramel Iced Latte">
+                        <div class="catalog-info">
+                            <span class="section-tag">DRINKS</span>
+                            <h4>Caramel Iced Latte</h4>
+                            <p class="price">₱95</p>
+                            <div class="card-btn-row">
+                                <button class="btn-sm-edit" data-item="Caramel Iced Latte">Edit</button>
+                                <button class="btn-sm-delete">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Catalog Item 3 -->
+                    <div class="catalog-card">
+                        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&q=80&w=300" alt="Chocolate Croissant">
+                        <div class="catalog-info">
+                            <span class="section-tag">SNACKS</span>
+                            <h4>Chocolate Croissant</h4>
+                            <p class="price">₱75</p>
+                            <div class="card-btn-row">
+                                <button class="btn-sm-edit" data-item="Chocolate Croissant">Edit</button>
+                                <button class="btn-sm-delete">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= VIEW 4: PROFILE SETTINGS ================= -->
+            <section id="viewProfileSettings" class="content-view">
+                <div class="view-header-row">
+                    <div>
+                        <span class="section-tag">STAFF ACCOUNT</span>
+                        <h1 class="view-title">Profile settings</h1>
+                        <p class="view-subtext">Manage your profile, preferences, and staff session.</p>
+                    </div>
+                </div>
+
+                <!-- Settings Segmented Tabs -->
+                <div class="settings-tab-bar">
+                    <button class="settings-tab-btn active" data-tab="staffProfile">
+                        <i data-lucide="user"></i> Profile
+                    </button>
+                    <button class="settings-tab-btn" data-tab="staffPreferences">
+                        <i data-lucide="sliders"></i> Preferences
+                    </button>
+                    <button class="settings-tab-btn" data-tab="staffSecurity">
+                        <i data-lucide="lock"></i> Security
+                    </button>
+                </div>
+
+                <!-- Tab 1: Profile -->
+                <div id="staffProfile" class="settings-pane active">
+                    <div class="profile-banner-card">
+                        <div class="banner-green-header">
+                            <span class="section-tag yellow">CAFÉ TEAM</span>
+                            <h2>Your staff profile</h2>
+                        </div>
+                        <div class="profile-body">
+                            <div class="avatar-box">
+                                <div class="avatar-large">MS</div>
+                                <button class="btn-photo-overlay">Change photo</button>
+                            </div>
+                            <div class="profile-meta-tags">
+                                <span class="tag-badge">Active staff</span>
+                                <span class="tag-badge gold">Canteen</span>
+                            </div>
+
+                            <form class="staff-form" onsubmit="event.preventDefault();">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Full name</label>
+                                        <input type="text" value="Maria Santos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email address</label>
+                                        <input type="email" value="maria.santos@sti.edu.ph">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Staff ID</label>
+                                        <input type="text" value="STF-2048" disabled class="disabled-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        <input type="text" value="Canteen Staff" disabled class="disabled-input">
+                                    </div>
+                                </div>
+                                <div class="form-footer">
+                                    <button class="btn-solid-dark">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Preferences -->
+                <div id="staffPreferences" class="settings-pane">
+                    <div class="settings-grid-two">
+                        <div class="settings-card">
+                            <div class="card-icon-avatar"><i data-lucide="file-text"></i></div>
+                            <span class="section-tag">LANGUAGE</span>
+                            <h3>Portal language</h3>
+                            <p class="card-sub-desc">Choose the language used across your staff workspace.</p>
+                            <select class="custom-select">
+                                <option>English</option>
+                                <option>Filipino</option>
+                            </select>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="card-icon-avatar gold-bg"><i data-lucide="moon"></i></div>
+                            <span class="section-tag">APPEARANCE</span>
+                            <h3>Display mode</h3>
+                            <p class="card-sub-desc">Pick the appearance that is most comfortable during your shift.</p>
+                            <div class="toggle-mode-group">
+                                <button class="mode-btn active">Light mode</button>
+                                <button class="mode-btn">Dark mode</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Security -->
+                <div id="staffSecurity" class="settings-pane">
+                    <div class="settings-card mb-20">
+                        <div class="security-row">
+                            <div class="security-info">
+                                <div class="icon-sq-avatar"><i data-lucide="lock"></i></div>
+                                <div>
+                                    <h4>Staff sign-in</h4>
+                                    <p>Staff ID and password • STF-2048</p>
+                                </div>
+                            </div>
+                            <span class="badge-protected">Authorized</span>
+                        </div>
+                        <hr class="divider">
+                        <div class="security-row">
+                            <div>
+                                <h4>Current shift session</h4>
+                                <p class="text-sm-muted">Café workstation • Active now</p>
+                            </div>
+                            <span class="status-dot-active">• Active</span>
+                        </div>
+                    </div>
+
+                    <div class="logout-card">
+                        <div>
+                            <h4>End your staff session</h4>
+                            <p>Log out when your café shift is complete.</p>
+                        </div>
+                        <button class="btn-danger">Log out</button>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL 1: EDIT ITEM -->
+    <div id="editItemModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <span class="section-tag">MENU ITEM</span>
+                    <h2>Edit item</h2>
+                </div>
+                <button class="btn-close-modal" id="btnCloseEditModal"><i data-lucide="x"></i></button>
+            </div>
+            <form onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Photo</label>
+                    <div class="modal-image-preview">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600" alt="Item preview">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label>Item name</label>
+                        <input type="text" value="Chicken Teriyaki Bowl">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>Price</label>
+                        <input type="text" value="145">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="custom-select">
+                        <option>Meals</option>
+                        <option>Drinks</option>
+                        <option>Snacks</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="custom-textarea">Glazed chicken, steamed rice, egg, and fresh vegetables</textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-outline" id="btnCancelEdit">Cancel</button>
+                    <button type="submit" class="btn-solid-dark">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ADD NEW ITEM -->
+    <div id="addItemModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <span class="section-tag">MENU ITEM</span>
+                    <h2>Add new item</h2>
+                </div>
+                <button class="btn-close-modal" id="btnCloseAddModal"><i data-lucide="x"></i></button>
+            </div>
+            <form onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Photo</label>
+                    <div class="upload-dropzone">
+                        <i data-lucide="image"></i>
+                        <span>Upload food photo</span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label>Item name</label>
+                        <input type="text" placeholder="e.g. Tuna Sandwich">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>Price</label>
+                        <input type="text" placeholder="₱ 0.00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="custom-select">
+                        <option>Meals</option>
+                        <option>Drinks</option>
+                        <option>Snacks</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="custom-textarea" placeholder="Describe the item"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-outline" id="btnCancelAdd">Cancel</button>
+                    <button type="submit" class="btn-solid-dark">Add to menu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Student Note: Script initialization -->
+    
+    
+
+</section>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
