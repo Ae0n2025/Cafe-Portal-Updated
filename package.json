@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --hostname 0.0.0.0",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

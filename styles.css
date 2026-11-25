@@ -34,11 +34,11 @@
     width: 100%;
 }
 
-/* ================= LEFT PANEL STYLES ================= */
+/*  LEFT PANEL STYLES  */
 #loginView .left-panel{
     flex: 1;
     background-color: var(--bg-dark-green);
-    /* Student Note: Subtle coffee background texture */
+    /*  PIC background login */
     background-image: radial-gradient(circle at 50% 50%, rgba(20, 60, 45, 0.4) 0%, rgba(7, 42, 30, 0.95) 100%),
                       url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1000');
     background-size: cover;
